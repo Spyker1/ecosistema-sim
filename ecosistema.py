@@ -16,16 +16,26 @@ class Ecosistema:
             # Cada especie se reproduce
             reproduccion(especie)
         
-        # Interacciones de depredación
+        # Interacciones de depredación y alimentación
         for depredador in self.especies:
             for presa in self.especies:
                 if isinstance(depredador, Animal) and depredador != presa:
                     depredacion(depredador, presa)
 
-        # Competencia entre especies
-        if len(self.especies) > 1:
-            for i in range(len(self.especies)):
-                for j in range(i+1, len(self.especies)):
-                    competencia(self.especies[i], self.especies[j])
-
         print("--- Fin del Ciclo ---\n")
+
+
+def ciclo(self):
+    print("\n--- Nuevo Ciclo ---")
+    for especie in self.especies:
+        reproduccion(especie)
+    
+    # Interacciones de depredación y alimentación
+    for depredador in self.especies:
+        for presa in self.especies:
+            if isinstance(depredador, Animal) and depredador != presa:
+                depredacion(depredador, presa)
+
+    print("--- Fin del Ciclo ---\n")
+
+
