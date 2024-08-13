@@ -2,15 +2,13 @@ from entidades import *
 
 
 def depredacion(depredador, presa):
-    if isinstance(depredador, Animal) and presa.nombre in depredador.presas_validas:
+    # Verificamos si el depredador tiene a la presa en su lista de presas válidas
+    if presa.nombre in depredador.presas_validas:
         if isinstance(presa, Planta) and isinstance(depredador, Herbivoro):
             depredador.comer_planta(presa)
         elif isinstance(presa, Animal):
             depredador.depredar(presa)
-        else:
-            print(f"{depredador.nombre} no puede cazar a {presa.nombre}.")
-    else:
-        print(f"{depredador.nombre} no tiene interés en cazar a {presa.nombre}.")
+    # No mostramos ningún mensaje si no es relevante (si no es una presa válida)
 
 def reproduccion(especie):
     nuevos_individuos = int(especie.poblacion * especie.tasa_de_reproduccion)
