@@ -6,11 +6,11 @@ def main():
     ambiente = Ambiente(clima="Tropical", recursos={"agua": 100, "alimento": 100})
     ecosistema = Ecosistema(ambiente)
 
-    leon = Animal(nombre="León", poblacion_inicial=5, tasa_de_reproduccion=0.2, tasa_de_depredacion=0.05, presas_validas=["Cebra"])
-    zebra = Herbivoro(nombre="Cebra", poblacion_inicial=20, tasa_de_reproduccion=0.4, tasa_de_depredacion=0.05, presas_validas=["Pasto"])
-    pasto = Planta(nombre="Pasto", poblacion_inicial=100, tasa_de_reproduccion=0.3)
-    aguila = Animal(nombre="Águila", poblacion_inicial=3, tasa_de_reproduccion=0.2, tasa_de_depredacion=0.02, presas_validas=["Cebra", "Peces", "Roedores"])
-    oso = Omnivoro(nombre="Oso", poblacion_inicial=5, tasa_de_reproduccion=0.2, tasa_de_depredacion=0.03, presas_validas=["Pasto", "Peces", "Cebra"])
+    leon = Animal(nombre="León", poblacion_inicial=5, tasa_de_reproduccion=0.3, tasa_de_depredacion=0.05, presas_validas=["Cebra"])
+    zebra = Herbivoro(nombre="Cebra", poblacion_inicial=20, tasa_de_reproduccion=0.5, tasa_de_depredacion=0.05, presas_validas=["Pasto"])
+    pasto = Planta(nombre="Pasto", poblacion_inicial=100, tasa_de_reproduccion=0.5)
+    aguila = Animal(nombre="Águila", poblacion_inicial=3, tasa_de_reproduccion=0.3, tasa_de_depredacion=0.02, presas_validas=["Cebra", "Peces", "Roedores"])
+    oso = Omnivoro(nombre="Oso", poblacion_inicial=5, tasa_de_reproduccion=0.3, tasa_de_depredacion=0.03, presas_validas=["Pasto", "Peces", "Cebra"])
 
     ecosistema.agregar_especie(leon)
     ecosistema.agregar_especie(zebra)

@@ -20,12 +20,13 @@ class Ecosistema:
         especie.envejecer()
         especie.reproducir()
         if isinstance(especie, Animal):
-            especie.tomar_decision(self.ambiente)
-        
+            especie.tomar_decision(self.ambiente, self)  # Pasar ambos argumentos: ambiente y ecosistema
+
         # Almacenar la población
         self.historial_poblacion[especie.nombre].append(especie.poblacion)
-        
-        print("--- Fin del Ciclo ---\n")
+    
+     print("--- Fin del Ciclo ---\n")
+ 
 
     
     def evento_natural(self):
@@ -35,16 +36,18 @@ class Ecosistema:
         print("Ha ocurrido un incendio forestal!")
         for especie in self.especies:
             if isinstance(especie, Planta):
-                especie.poblacion = max(0, especie.poblacion - random.randint(5, 20))  # Reducir el impacto
+                especie.poblacion = max(0, especie.poblacion - random.randint(2, 5))  # Impacto aún más reducido
      elif evento == "Sequía":
         print("Ha ocurrido una sequía!")
-        self.ambiente.ajustar_recursos("agua", max(0, self.ambiente.recursos["agua"] - random.randint(10, 30)))
+        self.ambiente.ajustar_recursos("agua", max(0, self.ambiente.recursos["agua"] - random.randint(2, 10)))  # Impacto reducido
      elif evento == "Inundación":
         print("Ha ocurrido una inundación!")
         for especie in self.especies:
-            especie.poblacion = max(0, especie.poblacion - random.randint(3, 10))  # Reducir el impacto
-        else:
-         print("No ha ocurrido ningún evento natural significativo.")
+            especie.poblacion = max(0, especie.poblacion - random.randint(1, 3))  # Impacto reducido
+     else:
+        print("No ha ocurrido ningún evento natural significativo.")
+
+
 
 
     

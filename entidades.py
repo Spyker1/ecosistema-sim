@@ -1,26 +1,30 @@
 import random
 
-
 class Especie:
     def __init__(self, nombre, poblacion_inicial, tasa_de_reproduccion):
         self.nombre = nombre
         self.poblacion = max(0, poblacion_inicial)
         self.tasa_de_reproduccion = tasa_de_reproduccion
-        self.edades = {"juvenil": max(0, poblacion_inicial // 2), "adulto": max(0, poblacion_inicial // 2), "anciano": 0}
+        self.edades = {"juvenil": max(0, poblacion_inicial // 3), "adulto": max(0, poblacion_inicial // 3 * 2), "anciano": 0}
         self.tasa_supervivencia = {"juvenil": 0.9, "adulto": 0.95, "anciano": 0.7}
         self.tasa_reproduccion = {"juvenil": 0, "adulto": tasa_de_reproduccion, "anciano": 0}
 
     def envejecer(self):
-        muertes = int(self.edades["anciano"] * (1 - self.tasa_supervivencia["anciano"]))
-        self.poblacion -= muertes
+        # Mover edades
         self.edades["anciano"] += self.edades["adulto"]
         self.edades["adulto"] = self.edades["juvenil"]
         self.edades["juvenil"] = 0
-        self.poblacion = max(0, self.poblacion)  # Asegurarse de que la población no sea negativa
+        
+        # Mortalidad en ancianos
+        muertes = int(self.edades["anciano"] * (1 - self.tasa_supervivencia["anciano"]))
+        self.edades["anciano"] -= muertes
+        self.poblacion -= muertes
+        self.poblacion = max(0, self.poblacion)  # Evitar población negativa
         print(f"{self.nombre} perdió {muertes} ancianos.")
 
     def reproducir(self):
-        nuevos_juveniles = int(self.edades["adulto"] * self.tasa_reproduccion["adulto"])
+        # Aumentar la tasa de reproducción para reflejar un crecimiento más rápido
+        nuevos_juveniles = int(self.edades["adulto"] * self.tasa_reproduccion["adulto"] * 1.5)  # Incrementar la reproducción
         self.edades["juvenil"] += nuevos_juveniles
         self.poblacion += nuevos_juveniles
         print(f"{self.nombre} tiene {nuevos_juveniles} nuevos juveniles. Población total: {self.poblacion}")
@@ -32,20 +36,23 @@ class Animal(Especie):
         self.tasa_de_depredacion = tasa_de_depredacion
         self.presas_validas = presas_validas
 
-    def tomar_decision(self, ambiente):
-        if ambiente.recursos["agua"] < 20 or self.poblacion < 10:
+    def tomar_decision(self, ambiente, ecosistema):
+        if self.poblacion < 5:  # Decisión basada en población baja
+            self.reproducir()
+        elif ambiente.recursos["agua"] < 20:  # Decisión basada en falta de recursos
             self.migrar()
         else:
-            self.cazar()
-
-    def migrar(self):
-        print(f"{self.nombre} decide migrar debido a la falta de recursos.")
-        # Aquí podrías implementar lógica para redistribuir la población o buscar mejores recursos
-
+            # Sólo caza si hay presas disponibles
+            presas_disponibles = any(presa.nombre in self.presas_validas and presa.poblacion > 0 for presa in ecosistema.especies)
+            if presas_disponibles:
+                self.cazar()
+            else:
+                print(f"{self.nombre} no encontró presas disponibles para cazar.")
+                
     def cazar(self):
         if self.poblacion > 0:
             print(f"{self.nombre} está cazando.")
-            # Implementa lógica de caza aquí
+            # Implementar lógica de caza aquí
         else:
             print(f"{self.nombre} no tiene suficiente población para cazar.")
 
